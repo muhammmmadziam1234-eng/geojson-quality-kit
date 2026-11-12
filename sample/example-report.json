@@ -1,0 +1,50 @@
+{
+  "input": 8,
+  "accepted": 4,
+  "rejected": 4,
+  "precision": 6,
+  "bbox": [
+    79.902348,
+    6.918753,
+    79.91057,
+    6.93028
+  ],
+  "nearMeters": 15,
+  "nearby": [
+    {
+      "ids": [
+        "SITE-02",
+        "SITE-07"
+      ],
+      "meters": 9.2
+    }
+  ],
+  "categories": {
+    "community": 1,
+    "emergency": 1,
+    "health": 2
+  },
+  "issues": [
+    {
+      "index": 2,
+      "id": "site-01",
+      "reason": "duplicate_id",
+      "keptIndex": 0
+    },
+    {
+      "index": 4,
+      "id": "SITE-04",
+      "reason": "invalid_point"
+    },
+    {
+      "index": 5,
+      "id": "SITE-05",
+      "reason": "invalid_point"
+    },
+    {
+      "index": 6,
+      "id": "SITE-06",
+      "reason": "missing_or_invalid_fields"
+    }
+  ]
+}

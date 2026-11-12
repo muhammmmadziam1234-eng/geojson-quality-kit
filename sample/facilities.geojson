@@ -1,0 +1,12 @@
+{
+  "type":"FeatureCollection","features":[
+    {"type":"Feature","id":" site-01 ","geometry":{"type":"Point","coordinates":[79.902347821,6.923521104]},"properties":{"name":" Bay  Clinic ","category":"Health"}},
+    {"type":"Feature","id":"SITE-02","geometry":{"type":"Point","coordinates":[79.910514,6.930219]},"properties":{"name":"Birch Library","category":"Community"}},
+    {"type":"Feature","id":"site-01","geometry":{"type":"Point","coordinates":[79.9023,6.9235]},"properties":{"name":"Bay Clinic","category":"health"}},
+    {"type":"Feature","id":"SITE-03","geometry":{"type":"Point","coordinates":[79.907845,6.918753]},"properties":{"name":"Lake Fire Station","category":"Emergency"}},
+    {"type":"Feature","id":"SITE-04","geometry":{"type":"Point","coordinates":[181.3,6.92]},"properties":{"name":"Riverside Clinic","category":"health"}},
+    {"type":"Feature","id":"SITE-05","geometry":{"type":"LineString","coordinates":[[79.9,6.9],[79.91,6.91]]},"properties":{"name":"Walkway","category":"Transport"}},
+    {"type":"Feature","id":"SITE-06","geometry":{"type":"Point","coordinates":[79.912339,6.925448]},"properties":{"name":"  ","category":"health"}},
+    {"type":"Feature","id":"SITE-07","geometry":{"type":"Point","coordinates":[79.910570,6.930280]},"properties":{"name":"West Clinic","category":"Health"}}
+  ]
+}

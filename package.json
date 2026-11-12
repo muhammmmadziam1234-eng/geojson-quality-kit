@@ -1,0 +1,1 @@
+{"name":"geojson-quality-kit","private":true,"type":"module","scripts":{"test":"node --test","demo":"node cli.mjs sample/facilities.geojson output"},"engines":{"node":">=22"}}
