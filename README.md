@@ -1,5 +1,7 @@
 # GeoJSON Quality Kit
 
+[![Tests](https://github.com/muhammmmadziam1234-eng/geojson-quality-kit/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/muhammmmadziam1234-eng/geojson-quality-kit/actions/workflows/test.yml)
+
 A small command-line data cleanup pipeline for a facility inventory. It standardizes identifiers and labels, checks WGS 84 longitude/latitude bounds, keeps the first valid occurrence of each ID, and reports exactly which input records were rejected. It also flags nearby accepted sites for manual review without merging records that may represent distinct facilities.
 
 ## Run
