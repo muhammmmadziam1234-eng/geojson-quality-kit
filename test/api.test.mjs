@@ -11,7 +11,7 @@ const sample = await readJson('sample/facilities.geojson');
 const pkg = await readJson('package.json');
 
 test('the entry point exports the documented API and nothing else', () => {
-  assert.deepEqual(Object.keys(api).sort(), ['ISSUE_CODES', 'VERSION', 'cleanFeatures', 'cleanPoints', 'validateGeometry']);
+  assert.deepEqual(Object.keys(api).sort(), ['ISSUE_CODES', 'VERSION', 'cleanFeatures', 'cleanPoints', 'cleanText', 'validateGeometry']);
   assert.equal(api.cleanPoints, cleanPoints);
 });
 

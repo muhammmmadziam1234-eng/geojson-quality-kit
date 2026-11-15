@@ -8,7 +8,7 @@ A data-quality tool for GeoJSON features. It checks Point, MultiPoint, LineStrin
 | --- | --- |
 | Interfaces | Library (`index.mjs`, hand-written `index.d.ts`), command line (`geojson-quality`), NDJSON streaming |
 | Report | Versioned and described by [report.schema.json](report.schema.json) (JSON Schema 2020-12) |
-| Tests | 85 tests, 98.71% of lines covered ([evidence](docs/evidence/coverage.txt)); golden files, seeded random tests checked against a brute-force exact checker, command line, types |
+| Tests | 92 tests, 99.74% of lines covered ([evidence](docs/evidence/coverage.txt)); golden files, seeded random tests checked against a brute-force exact checker, command line, types, a real browser |
 | Scale | 1,050,000 records (1,000,000 points and 50,000 polygons) cleaned in 12.81 s, peak memory 274 MB ([evidence](docs/evidence/benchmark.json)) |
 | Companion | Prepares zones and facilities for [flood-exposure-atlas](#recipe-prepare-zones-and-facilities-for-flood-exposure-atlas); the atlas's own validator accepts the output |
 
@@ -60,7 +60,7 @@ const {cleaned, report} = cleanFeatures(featureCollection, {precision: 6, nearMe
 // cleaned: a FeatureCollection; report: see "The report". The input is never modified.
 ~~~
 
-`index.mjs` exports `cleanFeatures`, `validateGeometry` (the findings for one geometry, without cleaning), `cleanPoints` (the original function, unchanged), `ISSUE_CODES` and `VERSION`; [index.d.ts](index.d.ts) types all of them and `npm run types` compiles a consumer file against it.
+`index.mjs` exports `cleanFeatures`, `cleanText(jsonString, options)` (parses a string and cleans it; returns `{cleaned, report}`, or `{error}` with the line and column of a JSON syntax error, or when the JSON is not a FeatureCollection), `validateGeometry` (the findings for one geometry, without cleaning), `cleanPoints` (the original function, unchanged), `ISSUE_CODES` and `VERSION`; [index.d.ts](index.d.ts) types all of them and `npm run types` compiles a consumer file against it.
 
 ## What it checks
 
@@ -134,6 +134,21 @@ An issue and a warning from `examples/messy/report.json`:
 
 Changes from the version 1 report (the one `cleanPoints` and the original command line write, which has no `schemaVersion`): `issues[].reason` is now `code` with a larger vocabulary, `issues[].keptIndex` moved to `details.keptIndex`, and `severity`, `message`, `details`, `schemaVersion`, `tool`, `options`, `output`, `geometries`, `warnings`, `counts` and `truncated` were added. `input`, `accepted`, `rejected`, `precision`, `bbox`, `nearMeters`, `nearby` and `categories` keep their names and meaning.
 
+## In the browser
+
+The core runs unchanged in a browser: `index.mjs` and every module it imports use no Node built-ins, `process`, `Buffer` or `require`. Only `cli.mjs`, `stream.mjs` and `benchmark.mjs` import `node:` modules. A page needs nothing but a static server (ES modules do not load from `file:`), and `cleanText` is the entry point for a string:
+
+~~~html
+<script type="module">
+  import {cleanText} from './index.mjs';
+  const result = cleanText(textarea.value, {nearMeters: 15});
+  if ('error' in result) show(result.error.line, result.error.column, result.error.message);
+  else show(result.cleaned, result.report);
+</script>
+~~~
+
+`test/browser.test.mjs` checks this two ways. A static pass follows every import from `index.mjs` and fails on a `node:` import or on `process`, `Buffer` or `require`. A browser pass serves this folder from a small static server, opens a blank page in Chromium, imports `/index.mjs` unchanged, and compares the results of cleaning the sample, a file with an example of every rule, a broken JSON text and the original `cleanPoints` with the results in Node: they are equal, there are no console errors, and no request leaves the test server. The test needs Chrome or Chromium through `CHROME_PATH`; without it the test is skipped, and in CI (`REQUIRE_BROWSER=1`) a missing browser fails the run.
+
 ## The sample
 
 `sample/facilities.geojson` holds eight fictional records. With the original form, `node cli.mjs sample/facilities.geojson output 5 20`, four pass and four are rejected: a duplicate id, an out-of-range longitude, a non-Point geometry, and a blank name. See [sample/example-report.json](sample/example-report.json) for the report. The full tool with all geometry types also accepts the walkway (a LineString), so `node cli.mjs sample/facilities.geojson output --near 15` accepts five; `--types Point` restores the points-only result. Both are tested.
@@ -145,7 +160,7 @@ Changes from the version 1 report (the one `cleanPoints` and the original comman
 
 ## Evidence
 
-- **Tests**: 85 tests run with `npm test` (98.71% of lines, gate at 95%, [coverage.txt](docs/evidence/coverage.txt)). They include golden files ([test/fixtures](test/fixtures)), the command line run as a process (flags, exit codes, standard input, NDJSON, the original form), the declarations compiled with `tsc` (`npm run types`), and the examples rebuilt through the command line and compared with the committed files.
+- **Tests**: 92 tests run with `npm test` (99.74% of lines, gate at 95%, [coverage.txt](docs/evidence/coverage.txt)). They include golden files ([test/fixtures](test/fixtures)), the command line run as a process (flags, exit codes, standard input, NDJSON, the original form), the declarations compiled with `tsc` (`npm run types`), and the examples rebuilt through the command line and compared with the committed files.
 - **Exact checks against an independent checker**: 9,000 random polygons must be accepted or rejected exactly where [test/support/oracle.mjs](test/support/oracle.mjs) says, with the same segment indices. The oracle is a brute-force BigInt implementation that shares no code with the library. The orientation, intersection and area predicates are compared with BigInt arithmetic on 20,000 random cases, including slivers whose result a floating-point calculation cannot decide.
 - **Random properties** (seeded, repeatable): cleaning twice equals cleaning once; the same input gives the same output; accepted features keep the input order and unique ids; no accepted feature breaks a rule.
 - **Compatibility**: `cleanFeatures` restricted to points is compared with the original `cleanPoints` on 200 random collections, and the original command line form is checked against the committed sample report.
@@ -189,6 +204,7 @@ Two differences to know about: the atlas refuses rings with an edge that jumps m
 - The proximity check covers points only. Its index holds one entry per accepted point in memory, and a very dense cluster makes the sweep slower (a cap on the list does not cap the work).
 - A FeatureCollection file is read whole; only NDJSON is streamed.
 - The GitHub Actions workflow (Node 22 and 24, coverage gate, declaration check, `npm pack --dry-run`, benchmark smoke run) was written here but could not be run here, so the badge above is its real state; `npm test` on Node 22 and on Node 24 passed on this machine.
+- The browser check runs in Chromium only, and needs `CHROME_PATH` (skipped locally without it). BigInt, which the exact fallback uses, must exist in the browser.
 - The benchmark is one run on one machine.
 - Next steps worth doing: splitting at the antimeridian as an option, opt-in repairs, overlap checks with a spatial index, and a streaming reader for very large single-file collections.
 

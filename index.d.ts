@@ -134,11 +134,34 @@ export interface IssueCodeInfo {
   severity: Severity;
   appliesTo: 'record' | 'feature' | 'geometry';
   summary: string;
+  /** Keys of the details object, "-" when there are none; "polygon?" appears only inside a MultiPolygon. */
+  details: string;
   fix: string;
 }
 
+/** Why a text could not be cleaned: it is not valid JSON, or it is valid JSON but not a FeatureCollection. */
+export interface ParseError {
+  code: 'invalid_json' | 'not_a_feature_collection';
+  /** For people. For invalid_json it names the position, for example 'Unexpected character "," at line 3, column 16'. */
+  message: string;
+  /** invalid_json only: what was found, without the position. */
+  detail?: string;
+  /** invalid_json only: 1-based line and column of the first character that breaks the JSON grammar. */
+  line?: number;
+  column?: number;
+  /** invalid_json only: zero-based offset into the text (after any leading byte order mark). */
+  offset?: number;
+}
+export type CleanTextResult = CleanResult | { error: ParseError; cleaned?: undefined; report?: undefined };
+
 /** Cleans, validates and reports on every feature of a FeatureCollection without modifying it. */
 export function cleanFeatures(collection: FeatureCollectionInput, options?: CleanOptions): CleanResult;
+/**
+ * Parses JSON text and cleans it, for callers that hold a string (a browser page, a pasted file).
+ * Returns {cleaned, report}, or {error} for text that is not valid JSON or not a FeatureCollection.
+ * Invalid options throw. Check with `'error' in result`.
+ */
+export function cleanText(text: string, options?: CleanOptions): CleanTextResult;
 /** The original points-only cleaner, unchanged. Returns the version 1 report. */
 export function cleanPoints(collection: FeatureCollectionInput, options?: { precision?: number; nearMeters?: number }): { cleaned: CleanCollection<PointGeometry>; report: LegacyReport };
 /** Checks one geometry against the rules without modifying it. */

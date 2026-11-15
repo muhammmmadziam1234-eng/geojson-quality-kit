@@ -1,10 +1,10 @@
 Measured with: node --test --experimental-test-coverage "--test-coverage-include=*.mjs" "--test-coverage-include=lib/**/*.mjs" "--test-coverage-include=scripts/**/*.mjs" "--test-coverage-exclude=test/**" "test/*.test.mjs"
 Node v22.23.4 on linux x64. Written with REFRESH_EVIDENCE=1, which skips only the test that compares the README with this file.
-tests 85, pass 83, fail 0, skipped 2; line coverage 98.71% (minimum 95%)
+tests 92, pass 90, fail 0, skipped 2; line coverage 99.74% (minimum 95%)
 
-----------------------------------------------------------------------
+--------------------------------------------------------------------
 file                | line % | branch % | funcs % | uncovered lines
-----------------------------------------------------------------------
+--------------------------------------------------------------------
 benchmark.mjs       | 100.00 |    83.33 |  100.00 | 
 cli.mjs             |  99.50 |    97.50 |  100.00 | 198
 index.mjs           | 100.00 |   100.00 |  100.00 | 
@@ -12,11 +12,11 @@ lib                 |        |          |         |
  cleaner.mjs        | 100.00 |    97.47 |  100.00 | 
  codes.mjs          | 100.00 |   100.00 |  100.00 | 
  geometry.mjs       | 100.00 |    97.28 |  100.00 | 
- json.mjs           |  83.72 |    77.55 |   72.73 | 21-26 31-35 48-50
- options.mjs        | 100.00 |    93.88 |   88.89 | 
+ json.mjs           |  97.67 |    97.96 |  100.00 | 49-50
+ options.mjs        | 100.00 |    92.16 |   88.89 | 
  predicates.mjs     | 100.00 |    97.14 |  100.00 | 
  proximity.mjs      | 100.00 |   100.00 |   87.50 | 
- text.mjs           | 100.00 |    42.86 |  100.00 | 
+ text.mjs           | 100.00 |   100.00 |  100.00 | 
  util.mjs           | 100.00 |   100.00 |  100.00 | 
  version.mjs        | 100.00 |   100.00 |  100.00 | 
 quality.mjs         | 100.00 |    97.14 |  100.00 | 
@@ -24,6 +24,6 @@ scripts             |        |          |         |
  build-examples.mjs | 100.00 |    60.00 |  100.00 | 
  readme-table.mjs   | 100.00 |    90.00 |  100.00 | 
 stream.mjs          | 100.00 |   100.00 |  100.00 | 
-----------------------------------------------------------------------
-all files           |  98.71 |    94.40 |   97.31 | 
-----------------------------------------------------------------------
+--------------------------------------------------------------------
+all files           |  99.74 |    96.42 |   98.92 | 
+--------------------------------------------------------------------

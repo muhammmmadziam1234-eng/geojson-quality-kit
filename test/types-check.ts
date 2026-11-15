@@ -2,7 +2,7 @@
 // proves that package.json "exports" and "types" point at index.d.ts. A line that follows an
 // expect-error comment must NOT compile; if one starts compiling, tsc reports the unused comment.
 import {
-  cleanFeatures, cleanPoints, validateGeometry, ISSUE_CODES, VERSION,
+  cleanFeatures, cleanPoints, cleanText, validateGeometry, ISSUE_CODES, VERSION,
   type CleanOptions, type Report, type IssueCode, type CleanFeature, type GeometryType, type FeatureCollectionInput
 } from 'geojson-quality-kit';
 
@@ -59,6 +59,14 @@ const info = ISSUE_CODES.self_intersection;
 const infoSeverity: 'error' | 'warning' = info.severity;
 const applies: 'record' | 'feature' | 'geometry' = info.appliesTo;
 
+const parsed = cleanText('{"type":"FeatureCollection","features":[]}', {precision: 4});
+if ('error' in parsed) {
+  const code: 'invalid_json' | 'not_a_feature_collection' = parsed.error.code;
+  const line: number | undefined = parsed.error.line;
+  void [code, line];
+} else { const kept: number = parsed.report.accepted; void kept; }
+// @ts-expect-error the text must be a string
+cleanText({type: 'FeatureCollection', features: []});
 // @ts-expect-error an unknown option is a compile error
 cleanFeatures(empty, {nearMeter: 5});
 // @ts-expect-error precision is a number
