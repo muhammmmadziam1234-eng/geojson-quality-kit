@@ -56,10 +56,11 @@ test('the atlas recipe outputs have the shapes the flood-exposure-atlas imports'
   }
 });
 
-test('when the atlas repository is next to this one, its own validator accepts the recipe outputs', t => {
-  const atlas = fileURLToPath(new URL('../flood-exposure-atlas/validate.mjs', root));
-  if (!existsSync(atlas)) return t.skip('flood-exposure-atlas/validate.mjs is not next to this repository');
-  const r = spawnSync(process.execPath, [fileURLToPath(new URL('scripts/check-atlas.mjs', root))], {encoding: 'utf8'});
+// ATLAS_DIR points at another checkout of the atlas; by default the folder next to this repository is used.
+test('when the atlas repository is available, its own validator accepts the recipe outputs', t => {
+  const atlas = process.env.ATLAS_DIR ?? fileURLToPath(new URL('../flood-exposure-atlas/', root));
+  if (!existsSync(join(atlas, 'validate.mjs'))) return t.skip('no flood-exposure-atlas/validate.mjs at ' + atlas + ' (set ATLAS_DIR)');
+  const r = spawnSync(process.execPath, [fileURLToPath(new URL('scripts/check-atlas.mjs', root)), atlas], {encoding: 'utf8'});
   assert.equal(r.status, 0, r.stdout + r.stderr);
   assert.match(r.stdout, /RESULT: the atlas validator accepts everything the kit produced\./);
 });
