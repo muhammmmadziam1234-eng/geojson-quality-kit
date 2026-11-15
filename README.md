@@ -25,7 +25,7 @@ node cli.mjs examples/messy.geojson output --near 15
 ~~~
 
 ~~~text
-Accepted 8 of 18 features; rejected 10; 6 warnings.
+Accepted 8 of 18 features; rejected 10; 6 warnings. Wrote 9 features.
 output/clean.geojson
 output/report.json
 ~~~
@@ -170,7 +170,7 @@ NDJSON input is cleaned one line at a time and cleaned features are written as t
 
 ## Recipe: prepare zones and facilities for flood-exposure-atlas
 
-[flood-exposure-atlas](../flood-exposure-atlas) imports zones as Polygon or MultiPolygon features with `name` and `level` (`low`, `moderate`, `high`), and facilities as Point features with `id`, `name` and `category` in `properties`. [examples/atlas](examples/atlas) holds a raw file of each and what the kit makes of them:
+[flood-exposure-atlas](https://github.com/muhammmmadziam1234-eng/flood-exposure-atlas) imports zones as Polygon or MultiPolygon features with `name` and `level` (`low`, `moderate`, `high`), and facilities as Point features with `id`, `name` and `category` in `properties`. [examples/atlas](examples/atlas) holds a raw file of each and what the kit makes of them:
 
 ~~~sh
 node cli.mjs examples/atlas/zones-raw.geojson examples/atlas/zones \
