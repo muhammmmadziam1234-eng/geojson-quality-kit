@@ -4,10 +4,16 @@ on:
   pull_request:
 permissions:
   contents: read
+env:
+  # The browser test drives the Chrome that is preinstalled on ubuntu-latest; nothing is downloaded.
+  CHROME_PATH: /usr/bin/google-chrome
+  # A missing browser fails the run here instead of skipping the browser test.
+  REQUIRE_BROWSER: '1'
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node: [22, 24]
     steps:
@@ -15,4 +21,21 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
-      - run: npm test
+          cache: npm
+      - run: npm ci
+      # Runs every test (unit, golden, randomized, CLI, types, browser) and fails under 95% line coverage.
+      - run: npm run coverage
+      - run: npm run types
+      # Lists what would be published; the test suite already asserts the exact file list.
+      - run: npm pack --dry-run
+  benchmark-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # 20,000 points and 1,000 polygons; fails if streaming and in-memory results differ.
+      - run: npm run benchmark
