@@ -1,1 +1,45 @@
-{"name":"geojson-quality-kit","private":true,"type":"module","scripts":{"test":"node --test","demo":"node cli.mjs sample/facilities.geojson output"},"engines":{"node":">=22"}}
+{
+  "name": "geojson-quality-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Data-quality checks and cleanup for GeoJSON features, with a typed library, a CLI and a stable report format. No runtime dependencies.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.mjs"
+    },
+    "./report.schema.json": "./report.schema.json",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "geojson-quality": "cli.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "index.d.ts",
+    "quality.mjs",
+    "cli.mjs",
+    "stream.mjs",
+    "lib/",
+    "report.schema.json"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "coverage": "node scripts/coverage-gate.mjs",
+    "types": "tsc --noEmit -p test/tsconfig.json",
+    "benchmark": "node benchmark.mjs",
+    "demo": "node cli.mjs sample/facilities.geojson output"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "playwright-core": "1.63.0",
+    "typescript": "5.9.3"
+  }
+}
