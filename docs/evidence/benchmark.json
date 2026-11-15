@@ -1,0 +1,48 @@
+{
+  "benchmark": "streaming NDJSON pipeline of geojson-quality-kit 1.0.0",
+  "mode": "large",
+  "machine": {
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.30GHz",
+    "logicalCpus": 4,
+    "memoryGB": 15.7,
+    "node": "v22.23.4",
+    "platform": "linux x64"
+  },
+  "data": {
+    "seed": 20261115,
+    "points": 1000000,
+    "polygons": 50000,
+    "records": 1050000,
+    "fileMB": 200.7
+  },
+  "options": {
+    "precision": 6,
+    "nearMeters": 15,
+    "maxItems": 1000
+  },
+  "result": {
+    "input": 1050000,
+    "accepted": 1043875,
+    "rejected": 6125,
+    "output": 1043875,
+    "errors": {
+      "coordinate_out_of_range": 1899,
+      "duplicate_id": 1939,
+      "invalid_json": 487,
+      "missing_property": 1016,
+      "null_geometry": 548,
+      "self_intersection": 236
+    },
+    "warnings": {
+      "ring_not_closed": 2502,
+      "ring_orientation": 24772
+    },
+    "nearbyPairs": 28356,
+    "issueListsCappedAt": 1000
+  },
+  "pipeline": {
+    "seconds": 12.81,
+    "recordsPerSecond": 81970,
+    "peakRssMB": 274
+  }
+}
