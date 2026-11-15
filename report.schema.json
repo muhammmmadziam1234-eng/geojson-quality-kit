@@ -1,0 +1,440 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "geojson-quality-kit report, schemaVersion 2",
+  "description": "Written by cleanFeatures and the geojson-quality command. The older version 1 report (cleanPoints and the original positional command line) has no schemaVersion and is not described here.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "tool",
+    "options",
+    "input",
+    "accepted",
+    "rejected",
+    "output",
+    "precision",
+    "nearMeters",
+    "bbox",
+    "geometries",
+    "categories",
+    "nearby",
+    "counts",
+    "truncated",
+    "issues",
+    "warnings"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 2
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "const": "geojson-quality-kit"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The options the run used, after defaults were applied.",
+      "required": [
+        "precision",
+        "nearMeters",
+        "geometryTypes",
+        "fields",
+        "groupBy",
+        "maxItems"
+      ],
+      "properties": {
+        "precision": {
+          "$ref": "#/$defs/precision"
+        },
+        "nearMeters": {
+          "$ref": "#/$defs/nearMeters"
+        },
+        "geometryTypes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/geometryType"
+          }
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "groupBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "maxItems": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "input": {
+      "$ref": "#/$defs/count",
+      "description": "Features read."
+    },
+    "accepted": {
+      "$ref": "#/$defs/count",
+      "description": "Input features accepted. accepted + rejected = input."
+    },
+    "rejected": {
+      "$ref": "#/$defs/count",
+      "description": "Input features rejected: one issue each."
+    },
+    "output": {
+      "$ref": "#/$defs/count",
+      "description": "Features written. Larger than accepted when MultiPoints were exploded."
+    },
+    "precision": {
+      "$ref": "#/$defs/precision",
+      "description": "Same as options.precision; kept so version 1 readers still work."
+    },
+    "nearMeters": {
+      "$ref": "#/$defs/nearMeters",
+      "description": "Same as options.nearMeters; kept so version 1 readers still work."
+    },
+    "bbox": {
+      "description": "[west, south, east, north] of the output, or null when nothing was accepted.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "items": false
+        }
+      ]
+    },
+    "geometries": {
+      "description": "Output features by geometry type.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/outputGeometryType"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/count"
+      }
+    },
+    "categories": {
+      "description": "Output features by the value of options.groupBy; empty when groupBy is null.",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/count"
+      }
+    },
+    "nearby": {
+      "description": "Accepted points closer than options.nearMeters, for manual review. Cut at options.maxItems.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ids",
+          "meters"
+        ],
+        "properties": {
+          "ids": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "items": false
+          },
+          "meters": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "counts": {
+      "description": "Exact totals, even when the lists below are cut.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "errors",
+        "warnings",
+        "nearby"
+      ],
+      "properties": {
+        "errors": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/errorCode"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/count"
+          }
+        },
+        "warnings": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/warningCode"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/count"
+          }
+        },
+        "nearby": {
+          "$ref": "#/$defs/count"
+        }
+      }
+    },
+    "truncated": {
+      "description": "True when the list was cut at options.maxItems.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issues",
+        "warnings",
+        "nearby"
+      ],
+      "properties": {
+        "issues": {
+          "type": "boolean"
+        },
+        "warnings": {
+          "type": "boolean"
+        },
+        "nearby": {
+          "type": "boolean"
+        }
+      }
+    },
+    "issues": {
+      "description": "One entry per rejected feature: the first error found, in input order.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issue"
+      }
+    },
+    "warnings": {
+      "description": "Things that were fixed or noted on accepted features, at most one entry per code per feature.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/warning"
+      }
+    }
+  },
+  "$defs": {
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "precision": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 8
+    },
+    "nearMeters": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "geometryType": {
+      "enum": [
+        "Point",
+        "MultiPoint",
+        "LineString",
+        "MultiLineString",
+        "Polygon",
+        "MultiPolygon"
+      ]
+    },
+    "outputGeometryType": {
+      "enum": [
+        "Point",
+        "LineString",
+        "MultiLineString",
+        "Polygon",
+        "MultiPolygon"
+      ]
+    },
+    "errorCode": {
+      "enum": [
+        "invalid_json",
+        "invalid_feature",
+        "invalid_id",
+        "missing_property",
+        "invalid_property_value",
+        "duplicate_id",
+        "null_geometry",
+        "geometry_collection_unsupported",
+        "unknown_geometry_type",
+        "geometry_type_not_allowed",
+        "invalid_coordinates",
+        "coordinate_out_of_range",
+        "empty_geometry",
+        "line_too_short",
+        "ring_too_short",
+        "ring_zero_area",
+        "self_intersection",
+        "rings_intersect",
+        "invalid_hole"
+      ]
+    },
+    "warningCode": {
+      "enum": [
+        "multipoint_exploded",
+        "duplicate_positions",
+        "ring_not_closed",
+        "ring_orientation",
+        "antimeridian_crossing"
+      ]
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "case"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "case": {
+          "enum": [
+            "keep",
+            "lower",
+            "upper"
+          ]
+        },
+        "oneOf": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A rejected feature.",
+      "required": [
+        "index",
+        "id",
+        "code",
+        "severity",
+        "message",
+        "details"
+      ],
+      "properties": {
+        "index": {
+          "$ref": "#/$defs/count",
+          "description": "Zero-based position of the input feature (for NDJSON, of the non-blank line)."
+        },
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The id as written in the input, or null when there was none."
+        },
+        "code": {
+          "$ref": "#/$defs/errorCode"
+        },
+        "severity": {
+          "const": "error"
+        },
+        "message": {
+          "type": "string",
+          "description": "For people. The wording can change between versions; rely on code and details."
+        },
+        "details": {
+          "type": "object",
+          "description": "Depends on the code; see the table in the README."
+        }
+      }
+    },
+    "warning": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A fix or note on an accepted feature.",
+      "required": [
+        "index",
+        "id",
+        "code",
+        "severity",
+        "message",
+        "details"
+      ],
+      "properties": {
+        "index": {
+          "$ref": "#/$defs/count",
+          "description": "Zero-based position of the input feature (for NDJSON, of the non-blank line)."
+        },
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The id as written in the input, or null when there was none."
+        },
+        "code": {
+          "$ref": "#/$defs/warningCode"
+        },
+        "severity": {
+          "const": "warning"
+        },
+        "message": {
+          "type": "string",
+          "description": "For people. The wording can change between versions; rely on code and details."
+        },
+        "details": {
+          "type": "object",
+          "description": "Depends on the code; see the table in the README."
+        }
+      }
+    }
+  }
+}
