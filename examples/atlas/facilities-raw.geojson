@@ -1,0 +1,15 @@
+{"type":"FeatureCollection","features":[
+  {"type":"Feature","id":"f01","geometry":{"type":"Point","coordinates":[79.711,6.999,4.5]},"properties":{"name":"Canal Clinic","category":"Health"}},
+  {"type":"Feature","id":"f02","geometry":{"type":"Point","coordinates":[79.703,7.01]},"properties":{"name":"Delta School","category":"Education"}},
+  {"type":"Feature","id":" F03 ","geometry":{"type":"Point","coordinates":[79.7205,7.0045]},"properties":{"name":" Pump  station ","category":"utilities"}},
+  {"type":"Feature","id":"f04","geometry":{"type":"Point","coordinates":[79.7418,7.001]},"properties":{"name":"Eastbank Fire Station","category":"EMERGENCY"}},
+  {"type":"Feature","id":"F01","geometry":{"type":"Point","coordinates":[79.7111,6.9991]},"properties":{"name":"Canal Clinic annex","category":"Health"}},
+  {"type":"Feature","id":"f06","geometry":{"type":"Point","coordinates":[79.9,7.2]},"properties":{"name":"Hill Reservoir","category":"Utilities"}},
+  {"type":"Feature","id":"f07","geometry":{"type":"Point","coordinates":[79.715,97]},"properties":{"name":"Pier Depot","category":"Utilities"}},
+  {"type":"Feature","id":"f08","geometry":{"type":"MultiPoint","coordinates":[[79.7301,7.0102],[79.73014,7.0102]]},"properties":{"name":"Pump pair","category":"Utilities"}},
+  {"type":"Feature","id":"f09","geometry":{"type":"Polygon","coordinates":[[[79.74,6.99],[79.745,6.99],[79.745,6.995],[79.74,6.995],[79.74,6.99]]]},"properties":{"name":"Marina","category":"Community"}},
+  {"type":"Feature","id":"f10","geometry":{"type":"Point","coordinates":[79.722,7.0135]},"properties":{"name":"","category":"Health"}},
+  {"type":"Feature","id":"f11","geometry":{"type":"Point","coordinates":[79.7225,7.0145]},"properties":{"name":"Alder Library"}},
+  {"type":"Feature","id":"f12","geometry":{"type":"Point","coordinates":[79.745,7.0125]},"properties":{"name":"Quarry Medical Centre","category":"health"}},
+  {"type":"Feature","id":"f13","geometry":{"type":"Point","coordinates":[79.72054,7.0045]},"properties":{"name":"Pump station spare","category":"utilities"}}
+]}

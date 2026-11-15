@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 2,
+  "tool": {
+    "name": "geojson-quality-kit",
+    "version": "1.0.0"
+  },
+  "options": {
+    "precision": 6,
+    "nearMeters": 15,
+    "geometryTypes": [
+      "Point",
+      "MultiPoint"
+    ],
+    "fields": [
+      {
+        "name": "id",
+        "case": "keep"
+      },
+      {
+        "name": "name",
+        "case": "keep"
+      },
+      {
+        "name": "category",
+        "case": "lower"
+      }
+    ],
+    "groupBy": "category",
+    "maxItems": 10000
+  },
+  "input": 13,
+  "accepted": 8,
+  "rejected": 5,
+  "output": 9,
+  "precision": 6,
+  "nearMeters": 15,
+  "bbox": [
+    79.703,
+    6.999,
+    79.9,
+    7.2
+  ],
+  "geometries": {
+    "Point": 9
+  },
+  "categories": {
+    "education": 1,
+    "emergency": 1,
+    "health": 2,
+    "utilities": 5
+  },
+  "nearby": [
+    {
+      "ids": [
+        "F03",
+        "F13"
+      ],
+      "meters": 4.4
+    },
+    {
+      "ids": [
+        "F08-1",
+        "F08-2"
+      ],
+      "meters": 4.4
+    }
+  ],
+  "counts": {
+    "errors": {
+      "coordinate_out_of_range": 1,
+      "duplicate_id": 1,
+      "geometry_type_not_allowed": 1,
+      "missing_property": 2
+    },
+    "warnings": {
+      "multipoint_exploded": 1
+    },
+    "nearby": 2
+  },
+  "truncated": {
+    "issues": false,
+    "warnings": false,
+    "nearby": false
+  },
+  "issues": [
+    {
+      "index": 4,
+      "id": "F01",
+      "code": "duplicate_id",
+      "severity": "error",
+      "message": "The id is already used by the accepted feature at index 0. Give this feature its own id.",
+      "details": {
+        "keptIndex": 0,
+        "id": "F01"
+      }
+    },
+    {
+      "index": 6,
+      "id": "f07",
+      "code": "coordinate_out_of_range",
+      "severity": "error",
+      "message": "The latitude 97 is out of range. Longitude must be within 180 and latitude within 90; check the axis order.",
+      "details": {
+        "path": [],
+        "axis": "latitude",
+        "value": 97
+      }
+    },
+    {
+      "index": 8,
+      "id": "f09",
+      "code": "geometry_type_not_allowed",
+      "severity": "error",
+      "message": "Polygon is not in the allowed geometry types (Point, MultiPoint). Allow it with the geometryTypes option or --types.",
+      "details": {
+        "type": "Polygon",
+        "allowed": [
+          "Point",
+          "MultiPoint"
+        ]
+      }
+    },
+    {
+      "index": 9,
+      "id": "f10",
+      "code": "missing_property",
+      "severity": "error",
+      "message": "Property \"name\" is missing or blank. Add a text value for it.",
+      "details": {
+        "property": "name"
+      }
+    },
+    {
+      "index": 10,
+      "id": "f11",
+      "code": "missing_property",
+      "severity": "error",
+      "message": "Property \"category\" is missing or blank. Add a text value for it.",
+      "details": {
+        "property": "category"
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "index": 7,
+      "id": "f08",
+      "code": "multipoint_exploded",
+      "severity": "warning",
+      "message": "MultiPoint split into 2 Point features: F08-1, F08-2.",
+      "details": {
+        "count": 2,
+        "ids": [
+          "F08-1",
+          "F08-2"
+        ]
+      }
+    }
+  ]
+}

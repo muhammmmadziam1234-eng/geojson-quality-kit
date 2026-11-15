@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 2,
+  "tool": {
+    "name": "geojson-quality-kit",
+    "version": "1.0.0"
+  },
+  "options": {
+    "precision": 6,
+    "nearMeters": 15,
+    "geometryTypes": [
+      "Point",
+      "MultiPoint",
+      "LineString",
+      "MultiLineString",
+      "Polygon",
+      "MultiPolygon"
+    ],
+    "fields": [
+      {
+        "name": "name",
+        "case": "keep"
+      },
+      {
+        "name": "category",
+        "case": "lower"
+      }
+    ],
+    "groupBy": "category",
+    "maxItems": 10000
+  },
+  "input": 18,
+  "accepted": 8,
+  "rejected": 10,
+  "output": 9,
+  "precision": 6,
+  "nearMeters": 15,
+  "bbox": [
+    -179.9,
+    -16.2,
+    179.8,
+    6.97
+  ],
+  "geometries": {
+    "LineString": 2,
+    "MultiPolygon": 1,
+    "Point": 4,
+    "Polygon": 2
+  },
+  "categories": {
+    "community": 1,
+    "flood": 3,
+    "health": 1,
+    "transport": 2,
+    "utilities": 2
+  },
+  "nearby": [
+    {
+      "ids": [
+        "WELL-06-1",
+        "WELL-06-2"
+      ],
+      "meters": 4.4
+    }
+  ],
+  "counts": {
+    "errors": {
+      "coordinate_out_of_range": 1,
+      "duplicate_id": 1,
+      "geometry_collection_unsupported": 1,
+      "invalid_coordinates": 1,
+      "invalid_id": 1,
+      "line_too_short": 1,
+      "missing_property": 1,
+      "null_geometry": 1,
+      "rings_intersect": 1,
+      "self_intersection": 1
+    },
+    "warnings": {
+      "antimeridian_crossing": 1,
+      "duplicate_positions": 1,
+      "multipoint_exploded": 1,
+      "ring_not_closed": 1,
+      "ring_orientation": 2
+    },
+    "nearby": 1
+  },
+  "truncated": {
+    "issues": false,
+    "warnings": false,
+    "nearby": false
+  },
+  "issues": [
+    {
+      "index": 2,
+      "id": "CLINIC-01",
+      "code": "duplicate_id",
+      "severity": "error",
+      "message": "The id is already used by the accepted feature at index 0. Give this feature its own id.",
+      "details": {
+        "keptIndex": 0,
+        "id": "CLINIC-01"
+      }
+    },
+    {
+      "index": 3,
+      "id": "FIRE-03",
+      "code": "coordinate_out_of_range",
+      "severity": "error",
+      "message": "The longitude 181.3 is out of range. Longitude must be within 180 and latitude within 90; check the axis order.",
+      "details": {
+        "path": [],
+        "axis": "longitude",
+        "value": 181.3
+      }
+    },
+    {
+      "index": 4,
+      "id": "SCH-04",
+      "code": "invalid_coordinates",
+      "severity": "error",
+      "message": "Invalid coordinates: expected 2 or 3 numbers, found 1. Write positions as [longitude, latitude].",
+      "details": {
+        "path": [],
+        "problem": "expected 2 or 3 numbers, found 1"
+      }
+    },
+    {
+      "index": 5,
+      "id": "DEP-05",
+      "code": "missing_property",
+      "severity": "error",
+      "message": "Property \"name\" is missing or blank. Add a text value for it.",
+      "details": {
+        "property": "name"
+      }
+    },
+    {
+      "index": 6,
+      "id": null,
+      "code": "invalid_id",
+      "severity": "error",
+      "message": "No usable id. Give the feature an id (or properties.id) of 1 to 40 letters, digits, \"_\" or \"-\".",
+      "details": {}
+    },
+    {
+      "index": 9,
+      "id": "PATH-08",
+      "code": "line_too_short",
+      "severity": "error",
+      "message": "A line has only 1 distinct position after rounding; it needs 2. Add another position or use a Point.",
+      "details": {
+        "path": [],
+        "distinct": 1
+      }
+    },
+    {
+      "index": 11,
+      "id": "ZONE-10",
+      "code": "self_intersection",
+      "severity": "error",
+      "message": "Ring 0 crosses itself between segments 0 and 2. Redraw the ring.",
+      "details": {
+        "ring": 0,
+        "segments": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "index": 12,
+      "id": "ZONE-11",
+      "code": "rings_intersect",
+      "severity": "error",
+      "message": "Ring 0 (segment 1) and ring 1 (segment 0) share a point. Move the hole.",
+      "details": {
+        "rings": [
+          0,
+          1
+        ],
+        "segments": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "index": 15,
+      "id": "GC-14",
+      "code": "geometry_collection_unsupported",
+      "severity": "error",
+      "message": "GeometryCollection is not supported. Split it into one feature per member geometry.",
+      "details": {}
+    },
+    {
+      "index": 16,
+      "id": "NULL-15",
+      "code": "null_geometry",
+      "severity": "error",
+      "message": "The geometry is null or missing. Add a geometry or drop the record.",
+      "details": {}
+    }
+  ],
+  "warnings": [
+    {
+      "index": 7,
+      "id": "WELL-06",
+      "code": "multipoint_exploded",
+      "severity": "warning",
+      "message": "MultiPoint split into 2 Point features: WELL-06-1, WELL-06-2.",
+      "details": {
+        "count": 2,
+        "ids": [
+          "WELL-06-1",
+          "WELL-06-2"
+        ]
+      }
+    },
+    {
+      "index": 8,
+      "id": "PATH-07",
+      "code": "duplicate_positions",
+      "severity": "warning",
+      "message": "1 consecutive duplicate position(s) removed.",
+      "details": {
+        "count": 1,
+        "at": [
+          []
+        ]
+      }
+    },
+    {
+      "index": 10,
+      "id": "ZONE-09",
+      "code": "ring_not_closed",
+      "severity": "warning",
+      "message": "1 ring(s) were not closed; the first position was appended.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "index": 10,
+      "id": "ZONE-09",
+      "code": "ring_orientation",
+      "severity": "warning",
+      "message": "1 ring(s) reversed to follow the right-hand rule.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "index": 14,
+      "id": "ZONE-13",
+      "code": "ring_orientation",
+      "severity": "warning",
+      "message": "1 ring(s) reversed to follow the right-hand rule.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "id": "SEA-17",
+      "code": "antimeridian_crossing",
+      "severity": "warning",
+      "message": "1 segment(s) span more than 180 degrees of longitude; kept as written.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            0
+          ]
+        ]
+      }
+    }
+  ]
+}

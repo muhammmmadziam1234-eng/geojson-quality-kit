@@ -1,0 +1,155 @@
+{
+  "type": "FeatureCollection",
+  "bbox": [
+    79.703,
+    6.999,
+    79.9,
+    7.2
+  ],
+  "features": [
+    {
+      "type": "Feature",
+      "id": "F01",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.711,
+          6.999
+        ]
+      },
+      "properties": {
+        "id": "F01",
+        "name": "Canal Clinic",
+        "category": "health"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F02",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.703,
+          7.01
+        ]
+      },
+      "properties": {
+        "id": "F02",
+        "name": "Delta School",
+        "category": "education"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F03",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.7205,
+          7.0045
+        ]
+      },
+      "properties": {
+        "id": "F03",
+        "name": "Pump station",
+        "category": "utilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F04",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.7418,
+          7.001
+        ]
+      },
+      "properties": {
+        "id": "F04",
+        "name": "Eastbank Fire Station",
+        "category": "emergency"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F06",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.9,
+          7.2
+        ]
+      },
+      "properties": {
+        "id": "F06",
+        "name": "Hill Reservoir",
+        "category": "utilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F08-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.7301,
+          7.0102
+        ]
+      },
+      "properties": {
+        "id": "F08-1",
+        "name": "Pump pair",
+        "category": "utilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F08-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.73014,
+          7.0102
+        ]
+      },
+      "properties": {
+        "id": "F08-2",
+        "name": "Pump pair",
+        "category": "utilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F12",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.745,
+          7.0125
+        ]
+      },
+      "properties": {
+        "id": "F12",
+        "name": "Quarry Medical Centre",
+        "category": "health"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "F13",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.72054,
+          7.0045
+        ]
+      },
+      "properties": {
+        "id": "F13",
+        "name": "Pump station spare",
+        "category": "utilities"
+      }
+    }
+  ]
+}

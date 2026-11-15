@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 2,
+  "tool": {
+    "name": "geojson-quality-kit",
+    "version": "1.0.0"
+  },
+  "options": {
+    "precision": 6,
+    "nearMeters": 15,
+    "geometryTypes": [
+      "Polygon",
+      "MultiPolygon"
+    ],
+    "fields": [
+      {
+        "name": "name",
+        "case": "keep"
+      },
+      {
+        "name": "level",
+        "case": "lower",
+        "oneOf": [
+          "low",
+          "moderate",
+          "high"
+        ]
+      }
+    ],
+    "groupBy": "level",
+    "maxItems": 10000
+  },
+  "input": 7,
+  "accepted": 4,
+  "rejected": 3,
+  "output": 4,
+  "precision": 6,
+  "nearMeters": 15,
+  "bbox": [
+    79.698,
+    6.988,
+    79.764,
+    7.022
+  ],
+  "geometries": {
+    "MultiPolygon": 1,
+    "Polygon": 3
+  },
+  "categories": {
+    "high": 1,
+    "low": 2,
+    "moderate": 1
+  },
+  "nearby": [],
+  "counts": {
+    "errors": {
+      "invalid_property_value": 1,
+      "missing_property": 1,
+      "self_intersection": 1
+    },
+    "warnings": {
+      "ring_not_closed": 1,
+      "ring_orientation": 2
+    },
+    "nearby": 0
+  },
+  "truncated": {
+    "issues": false,
+    "warnings": false,
+    "nearby": false
+  },
+  "issues": [
+    {
+      "index": 3,
+      "id": "Z-04",
+      "code": "invalid_property_value",
+      "severity": "error",
+      "message": "Property \"level\" is \"severe\", which is not one of: low, moderate, high.",
+      "details": {
+        "property": "level",
+        "value": "severe",
+        "allowed": [
+          "low",
+          "moderate",
+          "high"
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "id": "Z-05",
+      "code": "self_intersection",
+      "severity": "error",
+      "message": "Ring 0 crosses itself between segments 0 and 2. Redraw the ring.",
+      "details": {
+        "ring": 0,
+        "segments": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "id": "Z-07",
+      "code": "missing_property",
+      "severity": "error",
+      "message": "Property \"name\" is missing or blank. Add a text value for it.",
+      "details": {
+        "property": "name"
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "index": 0,
+      "id": "Z-01",
+      "code": "ring_not_closed",
+      "severity": "warning",
+      "message": "1 ring(s) were not closed; the first position was appended.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "index": 0,
+      "id": "Z-01",
+      "code": "ring_orientation",
+      "severity": "warning",
+      "message": "2 ring(s) reversed to follow the right-hand rule.",
+      "details": {
+        "count": 2,
+        "at": [
+          [
+            0
+          ],
+          [
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "id": "Z-06",
+      "code": "ring_orientation",
+      "severity": "warning",
+      "message": "1 ring(s) reversed to follow the right-hand rule.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    }
+  ]
+}

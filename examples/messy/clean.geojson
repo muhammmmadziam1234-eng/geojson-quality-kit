@@ -1,0 +1,270 @@
+{
+  "type": "FeatureCollection",
+  "bbox": [
+    -179.9,
+    -16.2,
+    179.8,
+    6.97
+  ],
+  "features": [
+    {
+      "type": "Feature",
+      "id": "CLINIC-01",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.902348,
+          6.923521
+        ]
+      },
+      "properties": {
+        "name": "Bay Clinic",
+        "category": "health"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LIB-02",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.910514,
+          6.930219
+        ]
+      },
+      "properties": {
+        "name": "Birch Library",
+        "category": "community"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "WELL-06-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.905,
+          6.91
+        ]
+      },
+      "properties": {
+        "name": "Twin wells",
+        "category": "utilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "WELL-06-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.90504,
+          6.91
+        ]
+      },
+      "properties": {
+        "name": "Twin wells",
+        "category": "utilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PATH-07",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            79.9,
+            6.9
+          ],
+          [
+            79.904,
+            6.903
+          ],
+          [
+            79.908,
+            6.904
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Beach walk",
+        "category": "transport"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-09",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.9,
+              6.9
+            ],
+            [
+              79.92,
+              6.9
+            ],
+            [
+              79.92,
+              6.92
+            ],
+            [
+              79.9,
+              6.92
+            ],
+            [
+              79.9,
+              6.9
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Estuary floodplain",
+        "category": "flood"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-12",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.93,
+              6.95
+            ],
+            [
+              79.95,
+              6.95
+            ],
+            [
+              79.95,
+              6.97
+            ],
+            [
+              79.93,
+              6.97
+            ],
+            [
+              79.93,
+              6.95
+            ]
+          ],
+          [
+            [
+              79.935,
+              6.955
+            ],
+            [
+              79.935,
+              6.965
+            ],
+            [
+              79.945,
+              6.965
+            ],
+            [
+              79.945,
+              6.955
+            ],
+            [
+              79.935,
+              6.955
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Lake terrace",
+        "category": "flood"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ZONE-13",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                79.96,
+                6.9
+              ],
+              [
+                79.97,
+                6.9
+              ],
+              [
+                79.97,
+                6.91
+              ],
+              [
+                79.96,
+                6.91
+              ],
+              [
+                79.96,
+                6.9
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                79.98,
+                6.9
+              ],
+              [
+                79.99,
+                6.9
+              ],
+              [
+                79.99,
+                6.91
+              ],
+              [
+                79.98,
+                6.91
+              ],
+              [
+                79.98,
+                6.9
+              ]
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Reclaimed land",
+        "category": "flood"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "SEA-17",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            179.8,
+            -16.1
+          ],
+          [
+            -179.9,
+            -16.2
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Island ferry",
+        "category": "transport"
+      }
+    }
+  ]
+}

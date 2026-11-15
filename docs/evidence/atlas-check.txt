@@ -1,0 +1,9 @@
+validate.mjs of flood-exposure-atlas (last changed in commit 934dab1, atlas HEAD 50a0747)
+
+zones after the kit (examples/atlas/zones/clean.geojson): 4 features, 4 accepted, 0 problems; geometry and properties kept unchanged: true
+zones straight from the raw file (examples/atlas/zones-raw.geojson): 7 features, 2 accepted, 6 problems
+
+facilities after the kit (examples/atlas/facilities/clean.geojson): 9 features, 9 accepted, 0 problems; geometry and properties kept unchanged: true
+facilities straight from the raw file (examples/atlas/facilities-raw.geojson): 13 features, 0 accepted, 18 problems
+
+RESULT: the atlas validator accepts everything the kit produced.

@@ -35,7 +35,9 @@
     "coverage": "node scripts/coverage-gate.mjs",
     "types": "tsc --noEmit -p test/tsconfig.json",
     "benchmark": "node benchmark.mjs",
-    "demo": "node cli.mjs sample/facilities.geojson output"
+    "demo": "node cli.mjs sample/facilities.geojson output",
+    "examples": "node scripts/build-examples.mjs",
+    "check:atlas": "node scripts/check-atlas.mjs"
   },
   "devDependencies": {
     "ajv": "8.20.0",
