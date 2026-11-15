@@ -140,6 +140,15 @@ test('NDJSON input is detected from .ndjson, .jsonl or --ndjson, streamed, and b
   assert.deepEqual((await readdir(dir)).filter(x => x.startsWith('clean')), []);
 }));
 
+test('an NDJSON path that cannot be read as a file stops with exit 3 and leaves no output behind', () => inTemp(async dir => {
+  await mkdir(join(dir, 'folder.ndjson'));
+  const r = geo([join(dir, 'folder.ndjson'), join(dir, 'out')]);
+  assert.equal(r.status, 3);
+  assert.match(r.err, /cannot read ".*folder\.ndjson": it is a directory\. Check the path/);
+  const stdout = geo([join(dir, 'folder.ndjson'), '--quiet']);
+  assert.equal(stdout.status, 3);
+}));
+
 test('--strict exits 1 only when something was rejected; the files are still written', () => inTemp(async dir => {
   const r = geo([sampleFile, dir, '--strict', '--quiet']);
   assert.equal(r.status, 1);

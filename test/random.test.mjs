@@ -190,6 +190,16 @@ test('predicates: orientation, segment intersection and area sign match BigInt a
   }
 });
 
+test('predicates: a sliver the floating-point filter cannot decide is settled exactly', () => {
+  // Both products are about 1e20, far beyond 2^53, and their difference is exactly 1.
+  const a = [0, 0], b = [10000000001, 10000000000], c = [10000000000, 9999999999];
+  assert.equal(orient(...a, ...b, ...c), -1);
+  assert.equal(areaSign([0, b[0], c[0], 0], [0, b[1], c[1], 0]), -1);
+  assert.equal(areaSign([0, c[0], b[0], 0], [0, c[1], b[1], 0]), 1);
+  assert.equal(orient(0, 0, 10000000000, 10000000000, 5000000000, 5000000000), 0);
+  assert.equal(areaSign([0, 4e9, 1.8e10, 0], [0, 4e9, 1.8e10, 0]), 0);
+});
+
 // ---- the new engine against the original point cleaner -----------------------------------------
 test('points: cleanFeatures restricted to points matches the original cleanPoints on random input', () => {
   const r = rng(SEED + 4), LEGACY = {missing_or_invalid_fields: ['invalid_id', 'missing_property'], invalid_point: ['null_geometry', 'geometry_collection_unsupported', 'unknown_geometry_type', 'geometry_type_not_allowed', 'invalid_coordinates', 'coordinate_out_of_range'], duplicate_id: ['duplicate_id'], invalid_feature: ['invalid_feature']};
