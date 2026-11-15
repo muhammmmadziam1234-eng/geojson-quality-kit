@@ -1,0 +1,288 @@
+{
+  "type": "FeatureCollection",
+  "bbox": [
+    -179,
+    0,
+    179,
+    40
+  ],
+  "features": [
+    {
+      "type": "Feature",
+      "id": "OK-POINT",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.9,
+          6.9
+        ]
+      },
+      "properties": {
+        "name": "ok-point site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "MULTI-1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10,
+          10
+        ]
+      },
+      "properties": {
+        "name": "multi site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "MULTI-2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.00004,
+          10
+        ]
+      },
+      "properties": {
+        "name": "multi site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "DOUBLED",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "properties": {
+        "name": "doubled site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "OPEN-RING",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "open-ring site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "CLOCKWISE",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "clockwise site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "DATELINE",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            179,
+            0
+          ],
+          [
+            -179,
+            0
+          ]
+        ]
+      },
+      "properties": {
+        "name": "dateline site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LAKE",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              20,
+              20
+            ],
+            [
+              30,
+              20
+            ],
+            [
+              30,
+              30
+            ],
+            [
+              20,
+              30
+            ],
+            [
+              20,
+              20
+            ]
+          ],
+          [
+            [
+              22,
+              22
+            ],
+            [
+              22,
+              24
+            ],
+            [
+              24,
+              24
+            ],
+            [
+              24,
+              22
+            ],
+            [
+              22,
+              22
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "lake site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISLANDS",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              30,
+              30
+            ],
+            [
+              31,
+              31
+            ]
+          ],
+          [
+            [
+              32,
+              32
+            ],
+            [
+              33,
+              33
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "islands site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "NEAR-A",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          40,
+          40
+        ]
+      },
+      "properties": {
+        "name": "near-a site",
+        "category": "park"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "NEAR-B",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          40.00005,
+          40
+        ]
+      },
+      "properties": {
+        "name": "near-b site",
+        "category": "park"
+      }
+    }
+  ]
+}

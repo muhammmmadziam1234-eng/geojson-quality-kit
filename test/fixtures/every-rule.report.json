@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 2,
+  "tool": {
+    "name": "geojson-quality-kit",
+    "version": "1.0.0"
+  },
+  "options": {
+    "precision": 6,
+    "nearMeters": 15,
+    "geometryTypes": [
+      "Point",
+      "MultiPoint",
+      "LineString",
+      "MultiLineString",
+      "Polygon"
+    ],
+    "fields": [
+      {
+        "name": "name",
+        "case": "keep"
+      },
+      {
+        "name": "category",
+        "case": "lower",
+        "oneOf": [
+          "park",
+          "school",
+          "clinic"
+        ]
+      }
+    ],
+    "groupBy": "category",
+    "maxItems": 10000
+  },
+  "input": 28,
+  "accepted": 10,
+  "rejected": 18,
+  "output": 11,
+  "precision": 6,
+  "nearMeters": 15,
+  "bbox": [
+    -179,
+    0,
+    179,
+    40
+  ],
+  "geometries": {
+    "LineString": 2,
+    "MultiLineString": 1,
+    "Point": 5,
+    "Polygon": 3
+  },
+  "categories": {
+    "park": 11
+  },
+  "nearby": [
+    {
+      "ids": [
+        "MULTI-1",
+        "MULTI-2"
+      ],
+      "meters": 4.4
+    },
+    {
+      "ids": [
+        "NEAR-A",
+        "NEAR-B"
+      ],
+      "meters": 4.3
+    }
+  ],
+  "counts": {
+    "errors": {
+      "coordinate_out_of_range": 1,
+      "duplicate_id": 1,
+      "empty_geometry": 1,
+      "geometry_collection_unsupported": 1,
+      "geometry_type_not_allowed": 1,
+      "invalid_coordinates": 1,
+      "invalid_feature": 1,
+      "invalid_hole": 1,
+      "invalid_id": 1,
+      "invalid_property_value": 1,
+      "line_too_short": 1,
+      "missing_property": 1,
+      "null_geometry": 1,
+      "ring_too_short": 1,
+      "ring_zero_area": 1,
+      "rings_intersect": 1,
+      "self_intersection": 1,
+      "unknown_geometry_type": 1
+    },
+    "warnings": {
+      "antimeridian_crossing": 1,
+      "duplicate_positions": 1,
+      "multipoint_exploded": 1,
+      "ring_not_closed": 1,
+      "ring_orientation": 1
+    },
+    "nearby": 2
+  },
+  "truncated": {
+    "issues": false,
+    "warnings": false,
+    "nearby": false
+  },
+  "issues": [
+    {
+      "index": 1,
+      "id": null,
+      "code": "invalid_feature",
+      "severity": "error",
+      "message": "Not a GeoJSON Feature with a properties object. Write it as {\"type\":\"Feature\",\"geometry\":{...},\"properties\":{...}}.",
+      "details": {}
+    },
+    {
+      "index": 2,
+      "id": null,
+      "code": "invalid_id",
+      "severity": "error",
+      "message": "No usable id. Give the feature an id (or properties.id) of 1 to 40 letters, digits, \"_\" or \"-\".",
+      "details": {}
+    },
+    {
+      "index": 3,
+      "id": "blank-name",
+      "code": "missing_property",
+      "severity": "error",
+      "message": "Property \"name\" is missing or blank. Add a text value for it.",
+      "details": {
+        "property": "name"
+      }
+    },
+    {
+      "index": 4,
+      "id": "bad-category",
+      "code": "invalid_property_value",
+      "severity": "error",
+      "message": "Property \"category\" is \"casino\", which is not one of: park, school, clinic.",
+      "details": {
+        "property": "category",
+        "value": "casino",
+        "allowed": [
+          "park",
+          "school",
+          "clinic"
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "id": "OK-POINT",
+      "code": "duplicate_id",
+      "severity": "error",
+      "message": "The id is already used by the accepted feature at index 0. Give this feature its own id.",
+      "details": {
+        "keptIndex": 0,
+        "id": "OK-POINT"
+      }
+    },
+    {
+      "index": 6,
+      "id": "no-geometry",
+      "code": "null_geometry",
+      "severity": "error",
+      "message": "The geometry is null or missing. Add a geometry or drop the record.",
+      "details": {}
+    },
+    {
+      "index": 7,
+      "id": "collection",
+      "code": "geometry_collection_unsupported",
+      "severity": "error",
+      "message": "GeometryCollection is not supported. Split it into one feature per member geometry.",
+      "details": {}
+    },
+    {
+      "index": 8,
+      "id": "unknown-type",
+      "code": "unknown_geometry_type",
+      "severity": "error",
+      "message": "Geometry type \"Circle\" is not a GeoJSON geometry type. Use Point, MultiPoint, LineString, MultiLineString, Polygon or MultiPolygon.",
+      "details": {
+        "type": "Circle"
+      }
+    },
+    {
+      "index": 9,
+      "id": "not-allowed",
+      "code": "geometry_type_not_allowed",
+      "severity": "error",
+      "message": "MultiPolygon is not in the allowed geometry types (Point, MultiPoint, LineString, MultiLineString, Polygon). Allow it with the geometryTypes option or --types.",
+      "details": {
+        "type": "MultiPolygon",
+        "allowed": [
+          "Point",
+          "MultiPoint",
+          "LineString",
+          "MultiLineString",
+          "Polygon"
+        ]
+      }
+    },
+    {
+      "index": 10,
+      "id": "short-position",
+      "code": "invalid_coordinates",
+      "severity": "error",
+      "message": "Invalid coordinates: expected 2 or 3 numbers, found 1. Write positions as [longitude, latitude].",
+      "details": {
+        "path": [],
+        "problem": "expected 2 or 3 numbers, found 1"
+      }
+    },
+    {
+      "index": 11,
+      "id": "far-east",
+      "code": "coordinate_out_of_range",
+      "severity": "error",
+      "message": "The longitude 181.3 is out of range. Longitude must be within 180 and latitude within 90; check the axis order.",
+      "details": {
+        "path": [],
+        "axis": "longitude",
+        "value": 181.3
+      }
+    },
+    {
+      "index": 12,
+      "id": "empty-line",
+      "code": "empty_geometry",
+      "severity": "error",
+      "message": "An empty coordinates array. Add the positions or drop the feature.",
+      "details": {
+        "path": []
+      }
+    },
+    {
+      "index": 13,
+      "id": "one-spot",
+      "code": "line_too_short",
+      "severity": "error",
+      "message": "A line has only 1 distinct position after rounding; it needs 2. Add another position or use a Point.",
+      "details": {
+        "path": [],
+        "distinct": 1
+      }
+    },
+    {
+      "index": 14,
+      "id": "flat-ring",
+      "code": "ring_too_short",
+      "severity": "error",
+      "message": "A ring (coordinates[0]) has only 3 positions after cleaning; it needs 4 (three corners plus the closing position).",
+      "details": {
+        "path": [
+          0
+        ],
+        "positions": 3
+      }
+    },
+    {
+      "index": 15,
+      "id": "no-area",
+      "code": "ring_zero_area",
+      "severity": "error",
+      "message": "A ring (coordinates[0]) encloses no area. Check that its corners are not on one line or collapsed by rounding.",
+      "details": {
+        "path": [
+          0
+        ]
+      }
+    },
+    {
+      "index": 16,
+      "id": "bow-tie",
+      "code": "self_intersection",
+      "severity": "error",
+      "message": "Ring 0 crosses itself between segments 0 and 2. Redraw the ring.",
+      "details": {
+        "ring": 0,
+        "segments": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "id": "hole-crosses",
+      "code": "rings_intersect",
+      "severity": "error",
+      "message": "Ring 0 (segment 1) and ring 1 (segment 0) share a point. Move the hole.",
+      "details": {
+        "rings": [
+          0,
+          1
+        ],
+        "segments": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "index": 18,
+      "id": "hole-outside",
+      "code": "invalid_hole",
+      "severity": "error",
+      "message": "Hole 1 lies outside the exterior ring. Move it, or make it a separate polygon.",
+      "details": {
+        "ring": 1,
+        "reason": "outside_exterior"
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "index": 19,
+      "id": "multi",
+      "code": "multipoint_exploded",
+      "severity": "warning",
+      "message": "MultiPoint split into 2 Point features: MULTI-1, MULTI-2.",
+      "details": {
+        "count": 2,
+        "ids": [
+          "MULTI-1",
+          "MULTI-2"
+        ]
+      }
+    },
+    {
+      "index": 20,
+      "id": "doubled",
+      "code": "duplicate_positions",
+      "severity": "warning",
+      "message": "1 consecutive duplicate position(s) removed.",
+      "details": {
+        "count": 1,
+        "at": [
+          []
+        ]
+      }
+    },
+    {
+      "index": 21,
+      "id": "open-ring",
+      "code": "ring_not_closed",
+      "severity": "warning",
+      "message": "1 ring(s) were not closed; the first position was appended.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "index": 22,
+      "id": "clockwise",
+      "code": "ring_orientation",
+      "severity": "warning",
+      "message": "1 ring(s) reversed to follow the right-hand rule.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "index": 23,
+      "id": "dateline",
+      "code": "antimeridian_crossing",
+      "severity": "warning",
+      "message": "1 segment(s) span more than 180 degrees of longitude; kept as written.",
+      "details": {
+        "count": 1,
+        "at": [
+          [
+            0
+          ]
+        ]
+      }
+    }
+  ]
+}
