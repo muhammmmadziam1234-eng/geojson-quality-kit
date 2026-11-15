@@ -32,6 +32,29 @@ test('proximity checks longitude wrap and can be disabled',()=>{
   assert.deepEqual(cleanPoints(input,{nearMeters:5}).report.nearby,[{ids:['A','B'],meters:4.4}]);
   assert.equal(cleanPoints(input,{nearMeters:0}).report.nearby.length,0);
 });
+test('the id is the feature id, else properties.id; only text counts as an id',()=>{
+  const row=over=>({type:'Feature',properties:{name:'N',category:'c'},geometry:{type:'Point',coordinates:[1,2]},...over});
+  const named=id=>({name:'N',category:'c',id});
+  const accepted=feature=>cleanPoints({type:'FeatureCollection',features:[feature]}).cleaned.features[0]?.id;
+  assert.equal(accepted(row({id:'a-1'})),'A-1');
+  assert.equal(accepted(row({properties:named('b-2')})),'B-2');
+  assert.equal(accepted(row({id:12,properties:named('b-2')})),'B-2');
+  assert.equal(accepted(row({id:'  ',properties:named('b-2')})),'B-2');
+  assert.equal(accepted(row({id:'a-1',properties:named('b-2')})),'A-1');
+  assert.equal(accepted(row({id:12})),undefined);
+  assert.equal(accepted(row({id:'a b'})),undefined);
+});
+test('an altitude is accepted and dropped; other coordinate shapes are rejected',()=>{
+  const point=(id,coordinates)=>({type:'Feature',id,properties:{name:id,category:'c'},geometry:{type:'Point',coordinates}});
+  const {cleaned,report}=cleanPoints({type:'FeatureCollection',features:[
+    point('a',[10.123456789,20.5,310]),point('b',[10,20,30,40]),point('c',[10,20,'30']),point('d',[10]),point('e',[10,20,Infinity])
+  ]},{nearMeters:0});
+  assert.deepEqual(cleaned.features.map(f=>f.geometry.coordinates),[[10.123457,20.5]]);
+  assert.deepEqual(report.bbox,[10.123457,20.5,10.123457,20.5]);
+  assert.deepEqual(report.issues.map(x=>[x.index,x.reason]),[[1,'invalid_point'],[2,'invalid_point'],[3,'invalid_point'],[4,'invalid_point']]);
+  const near=cleanPoints({type:'FeatureCollection',features:[point('a',[10,20,0]),point('b',[10.00005,20,5000])]},{nearMeters:10}).report.nearby;
+  assert.deepEqual(near.map(x=>x.ids),[['A','B']]);
+});
 test('CLI writes valid JSON artifacts and will not overwrite an input file',async()=>{
   const out=await mkdtemp(join(tmpdir(),'geo-quality-'));
   const cli=fileURLToPath(new URL('../cli.mjs',import.meta.url));

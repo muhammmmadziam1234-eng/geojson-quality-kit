@@ -1,5 +1,6 @@
 const isObject=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
-const coordinate=x=>Array.isArray(x)&&x.length===2&&x.every(Number.isFinite)&&Math.abs(x[0])<=180&&Math.abs(x[1])<=90;
+// [longitude, latitude] with an optional altitude, which is accepted and dropped.
+const coordinate=x=>Array.isArray(x)&&(x.length===2||x.length===3)&&x.every(Number.isFinite)&&Math.abs(x[0])<=180&&Math.abs(x[1])<=90;
 const newBounds=()=>[Infinity,Infinity,-Infinity,-Infinity];
 function extend(b,[x,y]){b[0]=Math.min(b[0],x);b[1]=Math.min(b[1],y);b[2]=Math.max(b[2],x);b[3]=Math.max(b[3],y);}
 function tidyText(value){return typeof value==='string'?value.trim().replace(/\s+/g,' '):'';}
@@ -31,13 +32,14 @@ export function cleanPoints(input,{precision=6,nearMeters=15}={}){
   const reject=(index,rawId,reason,extra={})=>rejected.push({index,id:typeof rawId==='string'?rawId:null,reason,...extra});
   for(const [index,raw] of input.features.entries()){
     if(!isObject(raw)||raw.type!=='Feature'||!isObject(raw.properties)){reject(index,null,'invalid_feature');continue;}
-    const {properties:p,geometry:g}=raw, rawId=raw.id??p.id;
+    // The feature's own id wins; properties.id is used when that is missing or not text.
+    const {properties:p,geometry:g}=raw, rawId=[raw.id,p.id].find(v=>typeof v==='string'&&v.trim()!=='')??null;
     const id=tidyText(rawId).toUpperCase(), name=tidyText(p.name), category=tidyText(p.category).toLowerCase();
     if(!/^[A-Z0-9][A-Z0-9_-]{0,39}$/.test(id)||!name||!category){reject(index,rawId,'missing_or_invalid_fields');continue;}
     if(g?.type!=='Point'||!coordinate(g.coordinates)){reject(index,rawId,'invalid_point');continue;}
     if(ids.has(id)){reject(index,rawId,'duplicate_id',{keptIndex:ids.get(id)});continue;}
-    const coords=g.coordinates.map(n=>Number(n.toFixed(precision))||0);
-    ids.set(id,index);points.push({id,coords:g.coordinates});extend(bounds,coords);byCategory.set(category,(byCategory.get(category)??0)+1);
+    const [lon,lat]=g.coordinates, coords=[lon,lat].map(n=>Number(n.toFixed(precision))||0);
+    ids.set(id,index);points.push({id,coords:[lon,lat]});extend(bounds,coords);byCategory.set(category,(byCategory.get(category)??0)+1);
     features.push({type:'Feature',id,geometry:{type:'Point',coordinates:coords},properties:{name,category}});
   }
   const bbox=features.length?bounds:null;
